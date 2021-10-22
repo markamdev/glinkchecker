@@ -24,7 +24,7 @@ func DetectDefaultGateway() (string, error) {
 	}
 	defer routeFile.Close()
 
-	spaceRemover := regexp.MustCompile("\\s+")
+	spaceRemover := regexp.MustCompile(`\s+`)
 
 	reader := bufio.NewReader(routeFile)
 	_, _, err = reader.ReadLine() // lines are rather short so let's ignore isPrefix, first line can be skipped
@@ -36,7 +36,6 @@ func DetectDefaultGateway() (string, error) {
 		modLine := spaceRemover.ReplaceAllString(string(line), " ")
 		modLine = strings.Trim(modLine, " ")
 		parts := strings.Split(modLine, " ")
-		fmt.Println("Number of elements:", len(parts), "Slice content:", parts)
 
 		if isUsableGateway(parts[3]) {
 			return convertHexToIP(parts[2]), nil
@@ -68,8 +67,6 @@ func convertHexToIP(in string) string {
 	strB := in[2:4]
 	strC := in[4:6]
 	strD := in[6:8]
-
-	fmt.Println("CheckPoint:", strA, strB, strC, strD)
 
 	A, err := strconv.ParseUint(strA, 16, 8)
 	if err != nil {
