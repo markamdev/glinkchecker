@@ -13,7 +13,7 @@ import (
 func main() {
 	fmt.Println("Link stability checker")
 	interval := flag.Int("interval", 30, "Interval between regular checks (in [s])")
-	address := flag.String("address", "", "Address to be used for link chceking (in 'address:port' form")
+	address := flag.String("address", "", "Address to be used for link chceking (given as IP)")
 	port := flag.String("port", "80", "Port number for connection checking. By default set to 80 (http without SSL/TLS)")
 
 	flag.Parse()

@@ -41,7 +41,6 @@ func (sc *simpleChecker) checkerProcess() {
 				sc.registerFailure()
 				currentInterval = sc.failureInterval
 			}
-			fmt.Println("Timeout!")
 		}
 	}
 }
