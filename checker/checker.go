@@ -2,6 +2,7 @@ package checker
 
 import (
 	"fmt"
+	"net"
 	"time"
 )
 
@@ -10,6 +11,7 @@ type simpleChecker struct {
 	failureInterval int
 	endpointAddress string
 	messages        chan bool
+	tcpCheck        net.Dialer
 }
 
 func (sc *simpleChecker) Start() {
@@ -45,7 +47,13 @@ func (sc *simpleChecker) checkerProcess() {
 }
 
 func (sc *simpleChecker) isAlive() bool {
-	return false
+	conn, err := sc.tcpCheck.Dial("tcp", sc.endpointAddress)
+	if err != nil {
+		return false
+	}
+
+	conn.Close()
+	return true
 }
 
 func (sc *simpleChecker) registerFailure() {
